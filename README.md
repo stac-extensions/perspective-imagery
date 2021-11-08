@@ -59,14 +59,14 @@ The spatial reference system for coordinate specified in `perspective_center`. S
 
 #### pers:vertical_crs
 If `pers:perspective_center` is 3-dimensional and `pers:crs` does not describe the vertical component this property describes the vertical reference 
-system for the Z coordinate specified in `perspective_center` if this is not defined by `pers:crs`. specified as 
+system for the Z coordinate specified in `perspective_center` if this is not defined by `pers:crs`. Specified as 
 [numerical EPSG code](http://www.epsg-registry.org/), [WKT2 (ISO 19162) string](http://docs.opengeospatial.org/is/18-010r7/18-010r7.html) or 
 [PROJJSON object](https://proj.org/specifications/projjson.html). Defaults to EPSG code 4326. 
 
 #### pers:rotation_matrix
-9 elements of the orthogonal matrix (in row major order) which rotates the spatial coordinate system (defined by `pers:crs` and `pers:vertical_crs`) 
-to be parallel to the image record coordinate system. See section 4.1 in \[[1](#references)]. This requires a three dimensional `perspective_center`.
- Often denoted `M`.
+9 elements of the orthogonal matrix `[m11, m12, m13, m21, m22, m23, m31, m32, m33]` in row major order which rotates the spatial coordinate system 
+(defined by `pers:crs` and `pers:vertical_crs`) to be parallel to the image record coordinate system. See section 4.1 in \[[1](#references)]. This 
+requires a three dimensional `perspective_center`.
 
 ### InteriorOrientation
 
@@ -75,7 +75,7 @@ The purpose of the `InteriorOrientation` object is to describe as much of the ca
 | Field Name              | Type      | Description |
 | ----------------------- | --------- | ----------- |
 | camera_id               | string    | Unique ID of the camera used |
-| camera_manufacturer     | string    | Camera munfacturer |
+| camera_manufacturer     | string    | Camera manufacturer |
 | camera_model            | string    | Camera model |
 | sensor_array_dimensions | \[int]    | Sensor dimensions as \[number_of_columns, number_of_rows] |
 | pixel_spacing           | \[number] | Distance between pixel centers in mm as \[column_spacing, row_spacing] |
@@ -118,10 +118,10 @@ Physical distance in the image plane (usually on the sensor chip) between center
 If unkown this may be derived from the physical width and height of the sensor chip and the sensor_array_dimensions.
 
 #### focal_length
-Effective distance from optical lens to sensor element. Measured in `mm`. Often denoted `f`.
+Effective distance from optical lens to sensor element. Measured in `mm`.
 
 #### principal_point_offset
-Principal point offset measured in `millimeters` and expressed as `[offset_x, offset_y]`. Often denoted `x0` and `y0`. The principal point offset is 
+Principal point offset measured in `mm` and expressed as `[offset_x, offset_y]`. The principal point offset is 
 the difference between the geometric center of the sensor and the optical center (see figure 12 in \[[1](#references)]).
 
 #### radial_distortion
@@ -131,8 +131,8 @@ Radial lens distortion coefficients as defined in section 3.3.3 of \[[1](#refere
 #### affine_distortion
 Affine distortion coefficients as defined in section Table 1, ID 26 (and section 3.3.1) of \[[1](#references)]. Expressed as `[a1, b1, c1, a2, b2, c2]`.
 
-### calibration_date
-Date of sensor calibration data used.
+#### calibration_date
+Date of sensor calibration data used. Formatted according to [https://datatracker.ietf.org/doc/html/rfc3339#section-5.6](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6).
 
 ## Relation types
 
