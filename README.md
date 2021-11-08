@@ -147,7 +147,11 @@ The following types should be used as applicable `rel` types in the
 - Use rotation matrix in preference of omega, phi and kappa
 - Use the [view](https://github.com/stac-extensions/view) extension. Particularly the `view:azimuth` and `view:off_nadir` are useful way to describe 
 important characteristics of the image. Even when the full exterior orientation is also speciffied.
-
+- Use `datetime` defined in STAC [item metadata](https://github.com/radiantearth/stac-spec/blob/master/item-spec/item-spec.md#properties-object) for 
+time of acquisition.
+- Use instrument metadata from STAC item 
+[common metadata](https://github.com/radiantearth/stac-spec/blob/master/item-spec/common-metadata.md#instrument) where it makes sense.
+ 
 ## References
 \[1]: NGA STANDARDIZATION DOCUMENT, Frame Sensor Model Metadata Profile Supporting Precise Geopositioning, 2011-07-07 
 [Link](http://www.gmljp2.work/fsmmg_standard/Frame_Formulation_Paper_Version_2.1_July2011.pdf)
