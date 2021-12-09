@@ -25,15 +25,23 @@
               "allOf": [
                 {
                   "$comment": "Require fields here for Item Properties.",
-                  "required": [
-                    "pers:perspective_center",
-                    "pers:crs"
-                  ]
+                  "required": []
                 },
                 {
                   "$ref": "#/definitions/fields"
                 }
-              ]
+              ],
+              "dependencies": {
+                "pers:crs": [
+                  "pers:perspective_center"
+                ],
+                "pers:perspective_center": [
+                  "pers:crs"
+                ],
+                "pers:vertical_crs": [
+                  "pers:crs"
+                ]
+              }
             },
             "assets": {
               "$comment": "This validates the fields in Item Assets, but does not require them.",
