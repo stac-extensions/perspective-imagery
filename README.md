@@ -1,7 +1,7 @@
 # Perspective Imagery Extension Specification
 
 - **Title:** Perspective Imagery
-- **Identifier:** <https://stac-extensions.github.io/perspective/v1.0.0/schema.json>
+- **Identifier:** <https://stac-extensions.github.io/perspective-imagery/v1.0.0/schema.json>
 - **Field Name Prefix:** pers
 - **Scope:** Item, Collection
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
@@ -13,7 +13,7 @@ specification.
 The extension aims to support a broad spectrum of perspective imagery use cases: 
 - photos taken with commodity cameras (SLR, mobile phone etc) or photogrammetric cameras
 - photos without georeference other than an aproximate footprint, georeferenced manually with a single point and possibly a direction, by EXIF GPS, 
-GPS/INS or even aerotriangulation
+GPS/INS or even aerotriangulation.
 
 The extension supports referencing camera intrinsics instead of embedding it in every Item.
 
