@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://stac-extensions.github.io/perspective-imagery/v1.0.0/schema.json#",
-  "title": "Template Extension",
-  "description": "STAC Template Extension for STAC Items and STAC Collections.",
+  "title": "Perspective Imagery Extension",
+  "description": "STAC Perspective Imagery Extension for STAC Items and STAC Collections.",
   "oneOf": [
     {
       "$comment": "This is the schema for STAC Items. Remove this object if this extension only applies to Collections.",
@@ -26,7 +26,8 @@
                 {
                   "$comment": "Require fields here for Item Properties.",
                   "required": [
-                    "template:new_field"
+                    "pers:perspective_center",
+                    "pers:crs"
                   ]
                 },
                 {
@@ -70,7 +71,7 @@
             {
               "$comment": "Require fields here for Collections (top-level).",
               "required": [
-                "template:new_field"
+                "pers:interior_orientation"
               ]
             },
             {
@@ -162,17 +163,42 @@
       "anyOf": [
         {
           "required": [
-            "template:new_field"
+            "pers:perspective_center"
           ]
         },
         {
           "required": [
-            "template:xyz"
+            "pers:crs"
           ]
         },
         {
           "required": [
-            "template:another_one"
+            "pers:vertical_crs"
+          ]
+        },
+        {
+          "required": [
+            "pers:rotation_matrix"
+          ]
+        },
+        {
+          "required": [
+            "pers:omega"
+          ]
+        },
+        {
+          "required": [
+            "pers:phi"
+          ]
+        },
+        {
+          "required": [
+            "pers:kappa"
+          ]
+        },
+        {
+          "required": [
+            "pers:interior_orientation"
           ]
         }
       ]
@@ -181,27 +207,43 @@
       "$comment": "Add your new fields here. Don't require them here, do that above in the corresponding schema.",
       "type": "object",
       "properties": {
-        "template:new_field": {
-          "type": "string"
-        },
-        "template:xyz": {
-          "type": "object",
-          "required": [
-            "x",
-            "y",
-            "z"
-          ],
-          "properties": {
-            "x": {
-              "type": "number"
-            },
-            "y": {
-              "type": "number"
-            },
-            "z": {
-              "type": "number"
-            }
+        "pers:perspective_center": {
+          "description": "X, Y and possibly also Z location of the sensor at time of exposure",
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 3,
+          "items": {
+            "type": "number"
           }
+        },
+        "pers:crs": {
+          "description": "Spatial reference system for coordinate specified in `perspective_center`",
+          "$ref": "#/definitions/reference_system_spatial"
+        },
+        "pers:vertical_crs": {
+          "description": "Vertical spatial reference system for Z coordinate specified in `perspective_center` if this is not defined by `pers:crs`",
+          "$ref": "#/definitions/reference_system_spatial"
+        },
+        "pers:rotation_matrix": {
+          "description": "Rotation matrix in row major which rotates the spatial coordinate system (defined by `pers:crs` and `pers:vertical_crs`) to be parallel to the image record coordinate system",
+          "type": "array",
+          "minItems": 9,
+          "maxItems": 9,
+          "items": {
+            "type": "number"
+          }
+        },
+        "pers:omega": {
+          "type": "number"
+        },
+        "pers:phi": {
+          "type": "number"
+        },
+        "pers:kappa": {
+          "type": "number"
+        },
+        "pers:interior_orientation": {
+          "$ref": "#/definitions/InteriorOrientation"
         },
         "template:another_one": {
           "type": "array",
@@ -211,11 +253,84 @@
         }
       },
       "patternProperties": {
-        "^(?!template:)": {
+        "^(?!pers:)": {
           "$comment": "Above, change `template` to the prefix of this extension"
         }
       },
       "additionalProperties": false
+    },
+    "InteriorOrientation": {
+      "type": "object",
+      "properties": {
+        "camera_id": {
+          "type": "string"
+        },
+        "camera_manufacturer": {
+          "type": "string"
+        },
+        "camera_model": {
+          "type": "string"
+        },
+        "sensor_array_dimensions": {
+          "description": "Sensor dimensions as [number_of_columns, number_of_rows]",
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "integer"
+          }
+        },
+        "pixel_spacing": {
+          "description": "Distance between pixel centers in mm as [column_spacing, row_spacing]",
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "number"
+          }
+        },
+        "focal_length": {
+          "description": "Focal length in mm",
+          "type": "number"
+        },
+        "principal_point_offset": {
+          "description": "Principal point offset in mm as [offset_x, offset_y]",
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "number"
+          }
+        },
+        "radial_distortion": {
+          "description": "Radial lens distortion koefficients as [k0, k1, k2, k3]",
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "number"
+          }
+        },
+        "affine_distortion": {
+          "description": "Affine distortion coefficients as [a1, b1, c1, a2, b2, c2]",
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": {
+            "type": "number"
+          }
+        },
+        "calibration_date": {
+          "type": "string"
+        }
+      }
+    },
+    "reference_system_spatial": {
+      "type": [
+        "string",
+        "number",
+        "object"
+      ]
     }
   }
 }
