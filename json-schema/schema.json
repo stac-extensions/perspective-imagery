@@ -160,9 +160,21 @@
     "require_any_field": {
       "$comment": "Please list all fields here so that we can force the existance of one of them in other parts of the schemas.",
       "anyOf": [
-        {"required": ["template:new_field"]},
-        {"required": ["template:xyz"]},
-        {"required": ["template:another_one"]}
+        {
+          "required": [
+            "template:new_field"
+          ]
+        },
+        {
+          "required": [
+            "template:xyz"
+          ]
+        },
+        {
+          "required": [
+            "template:another_one"
+          ]
+        }
       ]
     },
     "fields": {
@@ -190,9 +202,9 @@
               "type": "number"
             }
           }
-        }, 
+        },
         "template:another_one": {
-          "type": "array", 
+          "type": "array",
           "items": {
             "type": "number"
           }
