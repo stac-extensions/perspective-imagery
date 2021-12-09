@@ -39,7 +39,6 @@
     ]
   },
   "properties": {
-    "template:new_field": "test",
     "datetime": "2019-04-22T15:15:29Z",
     "pers:omega": -0.0721,
     "pers:phi": -34.9835,
