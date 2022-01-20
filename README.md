@@ -153,8 +153,8 @@ time of acquisition.
 [common metadata](https://github.com/radiantearth/stac-spec/blob/master/item-spec/common-metadata.md#instrument) where it makes sense.
  
 ## References
-\[1]: NGA STANDARDIZATION DOCUMENT, Frame Sensor Model Metadata Profile Supporting Precise Geopositioning, 2011-07-07 
-[Link](http://www.gmljp2.work/fsmmg_standard/Frame_Formulation_Paper_Version_2.1_July2011.pdf)
+
+\[1] NATIONAL GEOSPATIAL-INTELLIGENCE AGENCY. NGA.SIG.0002_2.1, Frame Sensor Model Metadata Profile Supporting Precise Geopositioning. NGA Standardization Document. Version 2.1. 7 July 2011. Available from: https://nsgreg.nga.mil/doc/view?i=2210
 
 ## Contributing
 
