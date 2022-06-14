@@ -154,7 +154,8 @@ time of acquisition.
  
 ## References
 
-\[1] NATIONAL GEOSPATIAL-INTELLIGENCE AGENCY. NGA.SIG.0002_2.1, Frame Sensor Model Metadata Profile Supporting Precise Geopositioning. NGA Standardization Document. Version 2.1. 7 July 2011. Available from: https://nsgreg.nga.mil/doc/view?i=2210
+\[1] NATIONAL GEOSPATIAL-INTELLIGENCE AGENCY. NGA.SIG.0002_2.1, Frame Sensor Model Metadata Profile Supporting Precise Geopositioning. 
+NGA Standardization Document. Version 2.1. 7 July 2011. Available from: [https://nsgreg.nga.mil/doc/view?i=2210](https://nsgreg.nga.mil/doc/view?i=2210)
 
 ## Contributing
 
