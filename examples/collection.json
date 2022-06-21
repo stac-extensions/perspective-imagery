@@ -36,6 +36,7 @@
       0.0052,
       0.0052
     ],
+    "field_of_view": 170,
     "calibration_date": "2019-04-01",
     "principal_point_offset": [
       0,
