@@ -7,12 +7,12 @@
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
 - **Owner**: @asgerpetersen
 
-This document explains the Perspective Imagery extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) 
+This document explains the Perspective Imagery extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC)
 specification.
 
-The extension aims to support a broad spectrum of perspective imagery use cases: 
+The extension aims to support a broad spectrum of perspective imagery use cases:
 - photos taken with commodity cameras (SLR, mobile phone etc) or photogrammetric cameras
-- photos without georeference other than an aproximate footprint, georeferenced manually with a single point and possibly a direction, by EXIF GPS, 
+- photos without georeference other than an aproximate footprint, georeferenced manually with a single point and possibly a direction, by EXIF GPS,
 GPS/INS or even aerotriangulation.
 
 The extension supports referencing camera intrinsics instead of embedding it in every Item.
@@ -39,33 +39,33 @@ The extension supports referencing camera intrinsics instead of embedding it in 
 | pers:vertical_crs         | string\|number\|object                      | The vertical spatial reference system for Z coordinate specified in `perspective_center` if this is not defined by `pers:crs`. specified as [numerical EPSG code](http://www.epsg-registry.org/), [WKT2 (ISO 19162) string](http://docs.opengeospatial.org/is/18-010r7/18-010r7.html) or [PROJJSON object](https://proj.org/specifications/projjson.html) |
 | pers:rotation_matrix      | \[number]                                   | Rotation matrix as `[m11, m12, m13, m21, m22, m23, m31, m32, m33]` in row major |
 
-**Note** Should we add an option to add omega, phi and kappa? This may be what people actually have in their data. Problem is of course that USING 
+**Note** Should we add an option to add omega, phi and kappa? This may be what people actually have in their data. Problem is of course that USING
 this formulation is often a pain in the behind.
 
 ### Additional Field Information
 
 ### pers:interior_orientation
-The interior orientation of camera describes the physical properties of the camera allowing reconstruction of scene geometry. As these data 
-typically are the same for all images recorded with the same camera it may make sense to put it on the Collection or link to a file with the 
+The interior orientation of camera describes the physical properties of the camera allowing reconstruction of scene geometry. As these data
+typically are the same for all images recorded with the same camera it may make sense to put it on the Collection or link to a file with the
 [InteriorOrientation](#interiororientation) object using the relation type defined in [Relation types](#relation-types).
 
 #### pers:perspective_center
 Location of the sensor in the geocentric coordinate system at time of exposure. This may be specified either as `[X, Y]` or `[X, Y, Z`].
 
 #### pers:crs
-The spatial reference system for coordinate specified in `perspective_center`. Specified as [numerical EPSG code](http://www.epsg-registry.org/), 
-[WKT2 (ISO 19162) string](http://docs.opengeospatial.org/is/18-010r7/18-010r7.html) or 
-[PROJJSON object](https://proj.org/specifications/projjson.html). Defaults to EPSG code 4326. 
+The spatial reference system for coordinate specified in `perspective_center`. Specified as [numerical EPSG code](http://www.epsg-registry.org/),
+[WKT2 (ISO 19162) string](http://docs.opengeospatial.org/is/18-010r7/18-010r7.html) or
+[PROJJSON object](https://proj.org/specifications/projjson.html). Defaults to EPSG code 4326.
 
 #### pers:vertical_crs
-If `pers:perspective_center` is 3-dimensional and `pers:crs` does not describe the vertical component this property describes the vertical reference 
-system for the Z coordinate specified in `perspective_center` if this is not defined by `pers:crs`. Specified as 
-[numerical EPSG code](http://www.epsg-registry.org/), [WKT2 (ISO 19162) string](http://docs.opengeospatial.org/is/18-010r7/18-010r7.html) or 
-[PROJJSON object](https://proj.org/specifications/projjson.html). Defaults to EPSG code 4326. 
+If `pers:perspective_center` is 3-dimensional and `pers:crs` does not describe the vertical component this property describes the vertical reference
+system for the Z coordinate specified in `perspective_center` if this is not defined by `pers:crs`. Specified as
+[numerical EPSG code](http://www.epsg-registry.org/), [WKT2 (ISO 19162) string](http://docs.opengeospatial.org/is/18-010r7/18-010r7.html) or
+[PROJJSON object](https://proj.org/specifications/projjson.html). Defaults to EPSG code 4326.
 
 #### pers:rotation_matrix
-9 elements of the orthogonal matrix `[m11, m12, m13, m21, m22, m23, m31, m32, m33]` in row major order which rotates the spatial coordinate system 
-(defined by `pers:crs` and `pers:vertical_crs`) to be parallel to the image record coordinate system. See section 4.1 in \[[1](#references)]. This 
+9 elements of the orthogonal matrix `[m11, m12, m13, m21, m22, m23, m31, m32, m33]` in row major order which rotates the spatial coordinate system
+(defined by `pers:crs` and `pers:vertical_crs`) to be parallel to the image record coordinate system. See section 4.1 in \[[1](#references)]. This
 requires a three dimensional `perspective_center`.
 
 ### InteriorOrientation
@@ -81,6 +81,7 @@ The purpose of the `InteriorOrientation` object is to describe as much of the ca
 | pixel_spacing           | \[number] | Distance between pixel centers in mm as \[column_spacing, row_spacing] |
 | focal_length            | number    | Focal length in mm |
 | principal_point_offset  | \[number] | Principal point offset in mm as \[offset_x, offset_y] |
+| field_of_view           | number    | Field of view (horizontal extent observable) in degrees |
 | radial_distortion       | \[number] | Radial lens distortion koefficients as \[k0, k1, k2, k3] |
 | affine_distortion       | \[number] | Affine distortion coefficients as \[a1, b1, c1, a2, b2, c2] |
 | calibration_date        | string    | Date of last calibration |
@@ -96,23 +97,23 @@ Manufacturer ("make") of the camera. Examples: "Nikon", "Apple", "Vexcel".
 #### camera_model
 Camera model. Examples: "D90", "iPhone SE", "UC OM3p".
 
-**Note:** For consumer cameras the manufacturer and model may enable estimated interior orientations by lookup. For instance using lists like 
+**Note:** For consumer cameras the manufacturer and model may enable estimated interior orientations by lookup. For instance using lists like
 [this](https://github.com/mapillary/OpenSfM/blob/main/opensfm/data/sensor_data_detailed.json) from mapillary.
 
 #### sensor_array_dimensions
-The number of columns and rows in the image sensor expressed as an array of two ints like `[number_of_columns, number_of_rows]`. In most cases this 
+The number of columns and rows in the image sensor expressed as an array of two ints like `[number_of_columns, number_of_rows]`. In most cases this
 is equal to the number of pixels in the original image output from the camera.
 
 **Note:**
-This is not necessarily equal to the dimensions of the image asset at hand. If the current image has been resized then the dimensions of the 
+This is not necessarily equal to the dimensions of the image asset at hand. If the current image has been resized then the dimensions of the
 original image must also be known.
 
-Giving these numbers as an array makes it way more likely that the implementor switches the dimensions by accident. It should be considered either 
-using an object instead maybe like `{"ncols": int, "nrows": int}` or using seperate properties like `"number_of_rows": int` and 
+Giving these numbers as an array makes it way more likely that the implementor switches the dimensions by accident. It should be considered either
+using an object instead maybe like `{"ncols": int, "nrows": int}` or using seperate properties like `"number_of_rows": int` and
 `"number_of_columns": int`.
 
 #### pixel_spacing
-Physical distance in the image plane (usually on the sensor chip) between centers of adjacent pixels within a column and within a row. Measured in 
+Physical distance in the image plane (usually on the sensor chip) between centers of adjacent pixels within a column and within a row. Measured in
 `mm`. Expressed as `[column_spacing, row_spacing]`.
 
 If unkown this may be derived from the physical width and height of the sensor chip and the sensor_array_dimensions.
@@ -121,11 +122,14 @@ If unkown this may be derived from the physical width and height of the sensor c
 Effective distance from optical lens to sensor element. Measured in `mm`.
 
 #### principal_point_offset
-Principal point offset measured in `mm` and expressed as `[offset_x, offset_y]`. The principal point offset is 
+Principal point offset measured in `mm` and expressed as `[offset_x, offset_y]`. The principal point offset is
 the difference between the geometric center of the sensor and the optical center (see figure 12 in \[[1](#references)]).
 
+#### field_of_view
+[Field of view](https://en.wikipedia.org/wiki/Field_of_view) (horizontal extent observable) measured in `degrees`.
+
 #### radial_distortion
-Radial lens distortion coefficients as defined in section 3.3.3 of \[[1](#references)] expressed as `[k0, k1, k2, k3]` where k0 is in `mm`, k1 is in 
+Radial lens distortion coefficients as defined in section 3.3.3 of \[[1](#references)] expressed as `[k0, k1, k2, k3]` where k0 is in `mm`, k1 is in
 `mm^-2`, k2 is in `mm^-4` and k3 is in `mm^-6`.
 
 #### affine_distortion
@@ -145,16 +149,16 @@ The following types should be used as applicable `rel` types in the
 
 ## Best practices
 - Use rotation matrix in preference of omega, phi and kappa
-- Use the [view](https://github.com/stac-extensions/view) extension. Particularly the `view:azimuth` and `view:off_nadir` are useful way to describe 
+- Use the [view](https://github.com/stac-extensions/view) extension. Particularly the `view:azimuth` and `view:off_nadir` are useful way to describe
 important characteristics of the image. Even when the full exterior orientation is also speciffied.
-- Use `datetime` defined in STAC [item metadata](https://github.com/radiantearth/stac-spec/blob/master/item-spec/item-spec.md#properties-object) for 
+- Use `datetime` defined in STAC [item metadata](https://github.com/radiantearth/stac-spec/blob/master/item-spec/item-spec.md#properties-object) for
 time of acquisition.
-- Use instrument metadata from STAC item 
+- Use instrument metadata from STAC item
 [common metadata](https://github.com/radiantearth/stac-spec/blob/master/item-spec/common-metadata.md#instrument) where it makes sense.
- 
+
 ## References
 
-\[1] NATIONAL GEOSPATIAL-INTELLIGENCE AGENCY. NGA.SIG.0002_2.1, Frame Sensor Model Metadata Profile Supporting Precise Geopositioning. 
+\[1] NATIONAL GEOSPATIAL-INTELLIGENCE AGENCY. NGA.SIG.0002_2.1, Frame Sensor Model Metadata Profile Supporting Precise Geopositioning.
 NGA Standardization Document. Version 2.1. 7 July 2011. Available from: [https://nsgreg.nga.mil/doc/view?i=2210](https://nsgreg.nga.mil/doc/view?i=2210)
 
 ## Contributing
@@ -167,10 +171,10 @@ for running tests are copied here for convenience.
 
 ### Running tests
 
-The same checks that run as checks on PR's are part of the repository and can be run locally to verify that changes are valid. 
+The same checks that run as checks on PR's are part of the repository and can be run locally to verify that changes are valid.
 To run tests locally, you'll need `npm`, which is a standard part of any [node.js installation](https://nodejs.org/en/download/).
 
-First you'll need to install everything with npm once. Just navigate to the root of this repository and on 
+First you'll need to install everything with npm once. Just navigate to the root of this repository and on
 your command line run:
 ```bash
 npm install

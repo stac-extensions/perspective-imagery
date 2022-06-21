@@ -295,6 +295,10 @@
           "description": "Focal length in mm",
           "type": "number"
         },
+        "field_of_view": {
+          "description": "Field of view (horizontal extent observable) in degrees",
+          "type": "number"
+        },
         "principal_point_offset": {
           "description": "Principal point offset in mm as [offset_x, offset_y]",
           "type": "array",
