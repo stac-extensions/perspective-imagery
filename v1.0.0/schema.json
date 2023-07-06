@@ -1,0 +1,347 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://stac-extensions.github.io/perspective-imagery/v1.0.0/schema.json#",
+  "title": "Perspective Imagery Extension",
+  "description": "STAC Perspective Imagery Extension for STAC Items and STAC Collections.",
+  "oneOf": [
+    {
+      "$comment": "This is the schema for STAC Items. Remove this object if this extension only applies to Collections.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/stac_extensions"
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "properties",
+            "assets"
+          ],
+          "properties": {
+            "type": {
+              "const": "Feature"
+            },
+            "properties": {
+              "allOf": [
+                {
+                  "$comment": "Require fields here for Item Properties.",
+                  "required": []
+                },
+                {
+                  "$ref": "#/definitions/fields"
+                }
+              ],
+              "dependencies": {
+                "pers:crs": [
+                  "pers:perspective_center"
+                ],
+                "pers:perspective_center": [
+                  "pers:crs"
+                ],
+                "pers:vertical_crs": [
+                  "pers:crs"
+                ]
+              }
+            },
+            "assets": {
+              "$comment": "This validates the fields in Item Assets, but does not require them.",
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/fields"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "$comment": "This is the schema for STAC Collections.",
+      "type": "object",
+      "allOf": [
+        {
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "const": "Collection"
+            }
+          }
+        },
+        {
+          "$ref": "#/definitions/stac_extensions"
+        }
+      ],
+      "anyOf": [
+        {
+          "$comment": "This is the schema for the top-level fields in a Collection. Remove this if this extension does not define top-level fields for Collections.",
+          "allOf": [
+            {
+              "$comment": "Require fields here for Collections (top-level).",
+              "required": [
+                "pers:interior_orientation"
+              ]
+            },
+            {
+              "$ref": "#/definitions/fields"
+            }
+          ]
+        },
+        {
+          "$comment": "This validates the fields in Collection Assets, but does not require them.",
+          "required": [
+            "assets"
+          ],
+          "properties": {
+            "assets": {
+              "type": "object",
+              "not": {
+                "additionalProperties": {
+                  "not": {
+                    "allOf": [
+                      {
+                        "$ref": "#/definitions/require_any_field"
+                      },
+                      {
+                        "$ref": "#/definitions/fields"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "$comment": "This is the schema for the fields in Item Asset Definitions. It doesn't require any fields.",
+          "required": [
+            "item_assets"
+          ],
+          "properties": {
+            "item_assets": {
+              "type": "object",
+              "not": {
+                "additionalProperties": {
+                  "not": {
+                    "allOf": [
+                      {
+                        "$ref": "#/definitions/require_any_field"
+                      },
+                      {
+                        "$ref": "#/definitions/fields"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "$comment": "This is the schema for the fields in Summaries. By default, only checks the existance of the properties, but not the schema of the summaries.",
+          "required": [
+            "summaries"
+          ],
+          "properties": {
+            "summaries": {
+              "$ref": "#/definitions/require_any_field"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "definitions": {
+    "stac_extensions": {
+      "type": "object",
+      "required": [
+        "stac_extensions"
+      ],
+      "properties": {
+        "stac_extensions": {
+          "type": "array",
+          "contains": {
+            "const": "https://stac-extensions.github.io/perspective-imagery/v1.0.0/schema.json"
+          }
+        }
+      }
+    },
+    "require_any_field": {
+      "$comment": "Please list all fields here so that we can force the existance of one of them in other parts of the schemas.",
+      "anyOf": [
+        {
+          "required": [
+            "pers:perspective_center"
+          ]
+        },
+        {
+          "required": [
+            "pers:crs"
+          ]
+        },
+        {
+          "required": [
+            "pers:vertical_crs"
+          ]
+        },
+        {
+          "required": [
+            "pers:rotation_matrix"
+          ]
+        },
+        {
+          "required": [
+            "pers:omega"
+          ]
+        },
+        {
+          "required": [
+            "pers:phi"
+          ]
+        },
+        {
+          "required": [
+            "pers:kappa"
+          ]
+        },
+        {
+          "required": [
+            "pers:interior_orientation"
+          ]
+        }
+      ]
+    },
+    "fields": {
+      "$comment": "Add your new fields here. Don't require them here, do that above in the corresponding schema.",
+      "type": "object",
+      "properties": {
+        "pers:perspective_center": {
+          "description": "X, Y and possibly also Z location of the sensor at time of exposure",
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 3,
+          "items": {
+            "type": "number"
+          }
+        },
+        "pers:crs": {
+          "description": "Spatial reference system for coordinate specified in `perspective_center`",
+          "$ref": "#/definitions/reference_system_spatial"
+        },
+        "pers:vertical_crs": {
+          "description": "Vertical spatial reference system for Z coordinate specified in `perspective_center` if this is not defined by `pers:crs`",
+          "$ref": "#/definitions/reference_system_spatial"
+        },
+        "pers:rotation_matrix": {
+          "description": "Rotation matrix in row major which rotates the spatial coordinate system (defined by `pers:crs` and `pers:vertical_crs`) to be parallel to the image record coordinate system",
+          "type": "array",
+          "minItems": 9,
+          "maxItems": 9,
+          "items": {
+            "type": "number"
+          }
+        },
+        "pers:omega": {
+          "type": "number"
+        },
+        "pers:phi": {
+          "type": "number"
+        },
+        "pers:kappa": {
+          "type": "number"
+        },
+        "pers:interior_orientation": {
+          "$ref": "#/definitions/InteriorOrientation"
+        }
+      },
+      "patternProperties": {
+        "^(?!pers:)": {
+          "$comment": "Above, change `template` to the prefix of this extension"
+        }
+      },
+      "additionalProperties": false
+    },
+    "InteriorOrientation": {
+      "type": "object",
+      "properties": {
+        "camera_id": {
+          "type": "string"
+        },
+        "camera_manufacturer": {
+          "type": "string"
+        },
+        "camera_model": {
+          "type": "string"
+        },
+        "sensor_array_dimensions": {
+          "description": "Sensor dimensions as [number_of_columns, number_of_rows]",
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "integer",
+            "exclusiveMinimum": 0
+          }
+        },
+        "pixel_spacing": {
+          "description": "Distance between pixel centers in mm as [column_spacing, row_spacing]",
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        },
+        "focal_length": {
+          "description": "Focal length in mm",
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "field_of_view": {
+          "description": "Field of view (horizontal extent observable) in degrees",
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 360
+        },
+        "principal_point_offset": {
+          "description": "Principal point offset in mm as [offset_x, offset_y]",
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "number"
+          }
+        },
+        "radial_distortion": {
+          "description": "Radial lens distortion koefficients as [k0, k1, k2, k3]",
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "number"
+          }
+        },
+        "affine_distortion": {
+          "description": "Affine distortion coefficients as [a1, b1, c1, a2, b2, c2]",
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": {
+            "type": "number"
+          }
+        },
+        "calibration_date": {
+          "type": "string"
+        }
+      }
+    },
+    "reference_system_spatial": {
+      "type": [
+        "string",
+        "number",
+        "object"
+      ]
+    }
+  }
+}
