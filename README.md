@@ -12,7 +12,7 @@ specification.
 
 The extension aims to support a broad spectrum of perspective imagery use cases:
 - photos taken with commodity cameras (SLR, mobile phone etc) or photogrammetric cameras
-- photos without georeference other than an aproximate footprint, georeferenced manually with a single point and possibly a direction, by EXIF GPS,
+- photos without georeference other than an approximate footprint, georeferenced manually with a single point and possibly a direction, by EXIF GPS,
 GPS/INS or even aerotriangulation.
 
 The extension supports referencing camera intrinsics instead of embedding it in every Item.
@@ -82,7 +82,7 @@ The purpose of the `InteriorOrientation` object is to describe as much of the ca
 | focal_length            | number    | Focal length in mm |
 | principal_point_offset  | \[number] | Principal point offset in mm as \[offset_x, offset_y] |
 | field_of_view           | number    | Field of view (horizontal extent observable) in degrees |
-| radial_distortion       | \[number] | Radial lens distortion koefficients as \[k0, k1, k2, k3] |
+| radial_distortion       | \[number] | Radial lens distortion coefficients as \[k0, k1, k2, k3] |
 | affine_distortion       | \[number] | Affine distortion coefficients as \[a1, b1, c1, a2, b2, c2] |
 | calibration_date        | string    | Date of last calibration |
 
@@ -101,22 +101,22 @@ Camera model. Examples: "D90", "iPhone SE", "UC OM3p".
 [this](https://github.com/mapillary/OpenSfM/blob/main/opensfm/data/sensor_data_detailed.json) from mapillary.
 
 #### sensor_array_dimensions
-The number of columns and rows in the image sensor expressed as an array of two ints like `[number_of_columns, number_of_rows]`. In most cases this
-is equal to the number of pixels in the original image output from the camera.
+The number of columns and rows in the image sensor expressed as an array of two integers like `[number_of_columns, number_of_rows]`. In most cases
+this is equal to the number of pixels in the original image output from the camera.
 
 **Note:**
 This is not necessarily equal to the dimensions of the image asset at hand. If the current image has been resized then the dimensions of the
 original image must also be known.
 
 Giving these numbers as an array makes it way more likely that the implementor switches the dimensions by accident. It should be considered either
-using an object instead maybe like `{"ncols": int, "nrows": int}` or using seperate properties like `"number_of_rows": int` and
+using an object instead maybe like `{"ncols": int, "nrows": int}` or using separate properties like `"number_of_rows": int` and
 `"number_of_columns": int`.
 
 #### pixel_spacing
 Physical distance in the image plane (usually on the sensor chip) between centers of adjacent pixels within a column and within a row. Measured in
 `mm`. Expressed as `[column_spacing, row_spacing]`.
 
-If unkown this may be derived from the physical width and height of the sensor chip and the sensor_array_dimensions.
+If unknown this may be derived from the physical width and height of the sensor chip and the sensor_array_dimensions.
 
 #### focal_length
 Effective distance from optical lens to sensor element. Measured in `mm`.
@@ -150,7 +150,7 @@ The following types should be used as applicable `rel` types in the
 ## Best practices
 - Use rotation matrix in preference of omega, phi and kappa
 - Use the [view](https://github.com/stac-extensions/view) extension. Particularly the `view:azimuth` and `view:off_nadir` are useful way to describe
-important characteristics of the image. Even when the full exterior orientation is also speciffied.
+important characteristics of the image. Even when the full exterior orientation is also specified.
 - Use `datetime` defined in STAC [item metadata](https://github.com/radiantearth/stac-spec/blob/master/item-spec/item-spec.md#properties-object) for
 time of acquisition.
 - Use instrument metadata from STAC item

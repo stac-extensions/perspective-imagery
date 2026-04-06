@@ -138,7 +138,7 @@
           }
         },
         {
-          "$comment": "This is the schema for the fields in Summaries. By default, only checks the existance of the properties, but not the schema of the summaries.",
+          "$comment": "This is the schema for the fields in Summaries. By default, only checks the existence of the properties, but not the schema of the summaries.",
           "required": [
             "summaries"
           ],
@@ -167,7 +167,7 @@
       }
     },
     "require_any_field": {
-      "$comment": "Please list all fields here so that we can force the existance of one of them in other parts of the schemas.",
+      "$comment": "Please list all fields here so that we can force the existence of one of them in other parts of the schemas.",
       "anyOf": [
         {
           "required": [
@@ -314,7 +314,7 @@
           }
         },
         "radial_distortion": {
-          "description": "Radial lens distortion koefficients as [k0, k1, k2, k3]",
+          "description": "Radial lens distortion coefficients as [k0, k1, k2, k3]",
           "type": "array",
           "minItems": 4,
           "maxItems": 4,
