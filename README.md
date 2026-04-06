@@ -143,9 +143,9 @@ Date of sensor calibration data used. Formatted according to [https://datatracke
 The following types should be used as applicable `rel` types in the
 [Link Object](https://github.com/radiantearth/stac-spec/tree/master/item-spec/item-spec.md#link-object).
 
-| Type                | Description |
-| ------------------- | ----------- |
-| interior-orientation      | This link points to json document with an [InteriorOrientation](#interiororientation) object. |
+| Type                 | Description |
+| -------------------- | ----------- |
+| interior-orientation | This link points to json document with an [InteriorOrientation](#interiororientation) object. |
 
 ## Best practices
 - Use rotation matrix in preference of omega, phi and kappa
