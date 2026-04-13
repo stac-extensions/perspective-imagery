@@ -39,9 +39,6 @@ The extension supports referencing camera intrinsics instead of embedding it in 
 | pers:vertical_crs         | string\|number\|object                      | The vertical spatial reference system for Z coordinate specified in `perspective_center` if this is not defined by `pers:crs`. specified as [numerical EPSG code](http://www.epsg-registry.org/), [WKT2 (ISO 19162) string](http://docs.opengeospatial.org/is/18-010r7/18-010r7.html) or [PROJJSON object](https://proj.org/specifications/projjson.html) |
 | pers:rotation_matrix      | \[number]                                   | Rotation matrix as `[m11, m12, m13, m21, m22, m23, m31, m32, m33]` in row major |
 
-**Note** Should we add an option to add omega, phi and kappa? This may be what people actually have in their data. Problem is of course that USING
-this formulation is often a pain in the behind.
-
 ### Additional Field Information
 
 ### pers:interior_orientation
@@ -50,7 +47,7 @@ typically are the same for all images recorded with the same camera it may make 
 [InteriorOrientation](#interiororientation) object using the relation type defined in [Relation types](#relation-types).
 
 #### pers:perspective_center
-Location of the sensor in the geocentric coordinate system at time of exposure. This may be specified either as `[X, Y]` or `[X, Y, Z`].
+Location of the sensor in the geocentric coordinate system at time of exposure. This may be specified either as `[X, Y]` or `[X, Y, Z]`.
 
 #### pers:crs
 The spatial reference system for coordinate specified in `perspective_center`. Specified as [numerical EPSG code](http://www.epsg-registry.org/),
@@ -62,11 +59,6 @@ If `pers:perspective_center` is 3-dimensional and `pers:crs` does not describe t
 system for the Z coordinate specified in `perspective_center` if this is not defined by `pers:crs`. Specified as
 [numerical EPSG code](http://www.epsg-registry.org/), [WKT2 (ISO 19162) string](http://docs.opengeospatial.org/is/18-010r7/18-010r7.html) or
 [PROJJSON object](https://proj.org/specifications/projjson.html). Defaults to EPSG code 4326.
-
-#### pers:rotation_matrix
-9 elements of the orthogonal matrix `[m11, m12, m13, m21, m22, m23, m31, m32, m33]` in row major order which rotates the spatial coordinate system
-(defined by `pers:crs` and `pers:vertical_crs`) to be parallel to the image record coordinate system. See section 4.1 in \[[1](#references)]. This
-requires a three dimensional `perspective_center`.
 
 ### InteriorOrientation
 
@@ -148,7 +140,6 @@ The following types should be used as applicable `rel` types in the
 | interior-orientation | This link points to json document with an [InteriorOrientation](#interiororientation) object. |
 
 ## Best practices
-- Use rotation matrix in preference of omega, phi and kappa
 - Use the [view](https://github.com/stac-extensions/view) extension. Particularly the `view:azimuth` and `view:off_nadir` are useful way to describe
 important characteristics of the image. Even when the full exterior orientation is also specified.
 - Use `datetime` defined in STAC [item metadata](https://github.com/radiantearth/stac-spec/blob/master/item-spec/item-spec.md#properties-object) for

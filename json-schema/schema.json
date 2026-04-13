@@ -186,26 +186,6 @@
         },
         {
           "required": [
-            "pers:rotation_matrix"
-          ]
-        },
-        {
-          "required": [
-            "pers:omega"
-          ]
-        },
-        {
-          "required": [
-            "pers:phi"
-          ]
-        },
-        {
-          "required": [
-            "pers:kappa"
-          ]
-        },
-        {
-          "required": [
             "pers:interior_orientation"
           ]
         }
@@ -231,24 +211,6 @@
         "pers:vertical_crs": {
           "description": "Vertical spatial reference system for Z coordinate specified in `perspective_center` if this is not defined by `pers:crs`",
           "$ref": "#/definitions/reference_system_spatial"
-        },
-        "pers:rotation_matrix": {
-          "description": "Rotation matrix in row major which rotates the spatial coordinate system (defined by `pers:crs` and `pers:vertical_crs`) to be parallel to the image record coordinate system",
-          "type": "array",
-          "minItems": 9,
-          "maxItems": 9,
-          "items": {
-            "type": "number"
-          }
-        },
-        "pers:omega": {
-          "type": "number"
-        },
-        "pers:phi": {
-          "type": "number"
-        },
-        "pers:kappa": {
-          "type": "number"
         },
         "pers:interior_orientation": {
           "$ref": "#/definitions/InteriorOrientation"
